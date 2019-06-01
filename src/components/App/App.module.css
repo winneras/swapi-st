@@ -1,0 +1,9 @@
+.mainTitle {
+  font-family: helvetica neue, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: rgb(255, 227, 0);
+  text-align: center;
+  margin: 0;
+  line-height: 100px;
+}
