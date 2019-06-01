@@ -1,0 +1,25 @@
+.pagePane {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+}
+.box {
+	background-color: #f1f1f1;
+	min-width: 1.5em;
+	margin: 5px;
+	text-align: center;
+	line-height: 1.5;
+	font-size: 20px;
+	cursor: pointer;
+}
+.selectedBox{
+	background-color: rgb(39, 43, 48);
+	min-width: 1.5em;
+	margin: 5px;
+	text-align: center;
+	line-height: 1.5;
+	font-size: 20px;
+	cursor: pointer;
+	color: rgb(255, 227, 0);
+	border: 1px solid #f1f1f1;
+}
