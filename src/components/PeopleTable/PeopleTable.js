@@ -19,6 +19,8 @@ const createRow = person => {
 const PeopleTable = ({ people }) => {
 	if (people.length < 1) {
 		return <div className={styles.loadingPane}>Loading...</div>;
+	} else if (people[0].isNoResult) {
+		return <div className={styles.loadingPane}>{people[0].name}</div>;
 	}
 	const peopleRows = people.map(createRow);
 

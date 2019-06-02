@@ -1,6 +1,22 @@
 const APIBase = "https://swapi.co/api/";
 
 const swapi = () => {
+	const emptyResultHandler = data => {
+		if (data.results.length === 0) {
+			data.results.push({
+				name: "Sorry no results returned",
+				height: "",
+				mass: "",
+				hair_color: "",
+				skin_color: "",
+				eye_color: "",
+				birth_year: "",
+				gender: "",
+				isNoResult: true
+			});
+		}
+		return data;
+	};
 	return {
 		getPeopleList: async page => {
 			if (!page || isNaN(page)) {
@@ -15,8 +31,11 @@ const swapi = () => {
 				page = 1;
 			}
 			searchWords = searchWords.trim();
-			let response = await fetch(`${APIBase}people/?search=${searchWords}&page=${page}&format=json`);
+			let response = await fetch(
+				`${APIBase}people/?search=${searchWords}&page=${page}&format=json`
+			);
 			let data = await response.json();
+			data = emptyResultHandler(data);
 			return data;
 		}
 	};
