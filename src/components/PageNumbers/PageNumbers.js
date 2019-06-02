@@ -47,7 +47,7 @@ const PageNumbers = ({ peopleCount, currentPage, cb }) => {
 	);
 	return (
 		<div className={styles.pagePane}>
-			{currentPage === 1 ? "" : previousBtn}
+			{currentPage === 1 || !totalPages ? "" : previousBtn}
 			{createPageNumbers(peopleCount, currentPage, cb)}
 			{currentPage === totalPages || !totalPages ? "" : nextBtn}
 		</div>

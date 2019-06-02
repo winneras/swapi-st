@@ -66,15 +66,17 @@ const App = () => {
     setPeople([]);
   };
   useEffect(() => {
-    /*const req = swapi.getPeopleList(page);
+    const req = swapi.getPeopleList(page);
     req.then(data => {
       console.log(data);
       setCount(data.count);
       setPeople(data.results);
-    });*/
+    });
+    /*
     let data = fakeData;
     setCount(data.count);
     setPeople(data.results);
+    */
   }, []);
   return (
     <div className="App">
