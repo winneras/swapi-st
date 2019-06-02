@@ -18,7 +18,7 @@ const createRow = person => {
 
 const PeopleTable = ({ people }) => {
 	if (people.length < 1) {
-		return <div className={styles.tablePane}>Loading...</div>;
+		return <div className={styles.loadingPane}>Loading...</div>;
 	}
 	const peopleRows = people.map(createRow);
 

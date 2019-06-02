@@ -3,15 +3,30 @@ import "./App.css";
 import styles from "./App.module.css";
 import PeopleTable from "../PeopleTable/PeopleTable";
 import PageNumbers from "../PageNumbers/PageNumbers";
+import SearchBar from "../SearchBar/SearchBar";
 import swapi from "../../services/swapi";
 import fakeData from "../../services/tests/testData.json";
-
+const Modes = { list: "list", search: "search" };
 const App = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [people, setPeople] = useState([]);
+  //mode can be "list" or "search";
+  const [mode, setMode] = useState(Modes.list);
+  const [searchTerm, setSearchTerm] = useState("");
   const requestPeople = pageNo => {
     const req = swapi.getPeopleList(pageNo);
+    req.then(data => {
+      setCount(data.count);
+      setPeople(data.results);
+    });
+  };
+  const searchPeople = (searchWords, pageNo) => {
+    let term = searchWords;
+    if(term === ""){
+      term = searchTerm;
+    }
+    const req = swapi.getPeopleBySearch(term, pageNo);
     req.then(data => {
       setCount(data.count);
       setPeople(data.results);
@@ -33,8 +48,21 @@ const App = () => {
     if (isNaN(requestPageNo) || requestPageNo < 1) {
       requestPageNo = 1;
     }
-    requestPeople(requestPageNo);
+    if (mode === Modes.list) {
+      requestPeople(requestPageNo);
+    } else {
+      searchPeople(searchTerm, requestPageNo);
+    }
+
     setPage(requestPageNo);
+    setPeople([]);
+  };
+  const searchHandler = searchWords => {
+    console.log(searchWords);
+    setSearchTerm(searchWords);
+    setMode(Modes.search);
+    searchPeople(searchWords);
+    setPage(1);
     setPeople([]);
   };
   useEffect(() => {
@@ -55,13 +83,19 @@ const App = () => {
           <h1 className={styles.mainTitle}>SWAPI People & Search</h1>
         </div>
         <div className="App-Main">
-          <div className="SearchOuter" />
+          <div className="SearchOuter">
+            <SearchBar onSearch={searchHandler} />
+          </div>
           <div className="tableOuter">
             <PeopleTable people={people} />
           </div>
         </div>
         <div className="App-Footer">
-          <PageNumbers peopleCount={count} cb={pageNoOnClick} currentPage={page} />
+          <PageNumbers
+            peopleCount={count}
+            cb={pageNoOnClick}
+            currentPage={page}
+          />
         </div>
       </div>
     </div>
